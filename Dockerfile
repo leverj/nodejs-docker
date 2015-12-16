@@ -6,7 +6,7 @@ RUN echo start \
 	&& apt-get update \
 	&& apt-get install -y nodejs \
 	&& rm -rf /var/lib/apt/lists/* \
-    && mkdir src \
+    && mkdir dist \
 	&& echo end 
 
 
