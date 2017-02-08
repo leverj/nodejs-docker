@@ -5,11 +5,11 @@ machine:
 test:
   override:
       - docker info
-      - docker build -t coinpit/nodejs .
+      - docker build -t coinpit/nodejs:alpine .
 
 deployment:
   hub:
-    branch: master
+    branch: alpine
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push coinpit/nodejs

@@ -1,12 +1,8 @@
-FROM ubuntu:trusty
+FROM alpine:edge
 RUN echo start \
-	&& apt-get update \
-	&& apt-get install -y build-essential curl python \
-	&& curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - \
-	&& apt-get update \
-	&& apt-get install -y nodejs \
-	&& rm -rf /var/lib/apt/lists/* \
-    && mkdir dist \
+	&& apk update \
+	&& apk add nodejs \
+  && mkdir dist \
 	&& echo end 
 
 
