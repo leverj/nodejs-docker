@@ -5,7 +5,7 @@ machine:
 test:
   override:
       - docker info
-      - docker build -t coinpit/nodejs .
+      - docker build -t coinpit/nodejs:v6 .
 
 deployment:
   hub:
