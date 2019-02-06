@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM debian:stretch
 RUN echo start \
 	&& apt-get update \
 	&& apt-get install -y build-essential curl python \
