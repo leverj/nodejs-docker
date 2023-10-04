@@ -12,7 +12,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker info
-      - run: docker build -t leverj/nodejs:v18.17.1 .
+      - run: docker build -t leverj/nodejs:v18.18.0 .
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker push leverj/nodejs:v18.17.1
+      - run: docker push leverj/nodejs:v18.18.0
       - run: docker logout
