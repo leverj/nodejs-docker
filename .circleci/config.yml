@@ -6,13 +6,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/node:18.17.1
+      - image: cimg/node:lts
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker info
-      - run: docker build -t leverj/nodejs:v20.12.2 .
+      - run: docker build -t leverj/nodejs:v20.15.1 .
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker push leverj/nodejs:v20.12.2
+      - run: docker push leverj/nodejs:v20.15.1
       - run: docker logout
