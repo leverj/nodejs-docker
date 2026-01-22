@@ -1,6 +1,6 @@
-FROM alpine:3.20
+FROM alpine:3.22
 
-ENV NODE_VERSION 22.14.0
+ENV NODE_VERSION=24.13.0
 
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
@@ -11,7 +11,7 @@ RUN addgroup -g 1000 node \
     && mkdir dist \
     && ARCH= OPENSSL_ARCH='linux*' && alpineArch="$(apk --print-arch)" \
       && case "${alpineArch##*-}" in \
-        x86_64) ARCH='x64' CHECKSUM="87f163387ac85df69df6eeb863a6b6a1aa789b49cda1c495871c0fe360634db3" OPENSSL_ARCH=linux-x86_64;; \
+        x86_64) ARCH='x64' CHECKSUM="d2fc40cf688de9de1d85ac67536ede51445a45925e1823255db1c3365b83ac44" OPENSSL_ARCH=linux-x86_64;; \
         x86) OPENSSL_ARCH=linux-elf;; \
         aarch64) OPENSSL_ARCH=linux-aarch64;; \
         arm*) OPENSSL_ARCH=linux-armv4;; \
@@ -42,7 +42,7 @@ RUN addgroup -g 1000 node \
     && export GNUPGHOME="$(mktemp -d)" \
     # gpg keys listed at https://github.com/nodejs/node#release-keys
     && for key in \
-      C0D6248439F1D5604AAFFB4021D900FFDB233756 \
+      5BE8A3F6C8A5C01D106C0AD820B1A390B168D356 \
       DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7 \
       CC68F5A3106FF448322E48ED27F5E38D5B0A215F \
       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
@@ -51,8 +51,8 @@ RUN addgroup -g 1000 node \
       108F52B48DB57BB0CC439B2997B01419BD92F80A \
       A363A499291CBBC940DD62E41F10027AF002F8B0 \
     ; do \
-      gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
-      gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" ; \
+      { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" && gpg --batch --fingerprint "$key"; } || \
+      { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" && gpg --batch --fingerprint "$key"; } ; \
     done \
     && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION.tar.xz" \
     && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
